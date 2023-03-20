@@ -51,6 +51,12 @@ IO aware with carefully accounting for the number of access to the slow and fast
 
 ## Experiments and results
 
+### Training time
+
+### Model Accuracy
+
+
+### Memory usage
 
 
 ## Limitation
