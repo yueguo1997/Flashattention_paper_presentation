@@ -23,7 +23,7 @@ IO aware with carefully accounting for the number of access to the slow and fast
 
 
 ### Recall Standard Attention
-
+![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/c49e4ad099f488b020e449a2b4ac9263ee9747f0/image2.png)
 
 
 ## FlashAttention
@@ -33,6 +33,9 @@ IO aware with carefully accounting for the number of access to the slow and fast
 
 
 ### Algorithm
+
+
+![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/c49e4ad099f488b020e449a2b4ac9263ee9747f0/image3.png)
 
 
 
