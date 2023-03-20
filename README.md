@@ -14,11 +14,11 @@ Many other methods have been developed. However, many of these methods do not sh
 ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/17782d32252de3ba7d854dbdfa9eb3108829bbb9/image1.png)
 
 
-! Question 1: Why we cannot derectly put the matric into SRAM to compute, which is much faster.
+### Convert the problem
+Our goal is to maximize the use of fast memory: SRAM.
 
 
 ### Methods
-Above all, one of our gaol is to restructure the attention and let all the intermediate matrics computed on fast memory: SRAM. 
 IO aware with carefully accounting for the number of access to the slow and fast memory through tiling and recomputing
 
 
@@ -56,13 +56,7 @@ IO aware with carefully accounting for the number of access to the slow and fast
 ## Limitation
 
 
-
-## Question 2
-
-
-
-
-## Others
+## Links
 
 [Video]()
 
