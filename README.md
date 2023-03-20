@@ -10,10 +10,11 @@ Transformers have become larger and more complex, but incorporating longer conte
 Many other methods have been developed. However, many of these methods do not show a significant improvement in speed over standard attention because they primarily concentrate on reducing the number of floating-point operations (FLOPs) and neglect the overheads from memory access (IO).
 
 
-
 ### SRAM vs HBM
 ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/17782d32252de3ba7d854dbdfa9eb3108829bbb9/image1.png)
 
+
+! Question 1: Why we cannot derectly put the matric into SRAM to compute, which is much faster.
 
 
 ### Methods
@@ -52,7 +53,7 @@ IO aware with carefully accounting for the number of access to the slow and fast
 ## Limitation
 
 
-## Question 1
+
 ## Question 2
 
 
