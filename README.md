@@ -4,13 +4,21 @@
 ## Background
 
 ### Problem Overview
-Transformers have grown larger and deeper, but equipping them with longer context remains difficult, since the self-attention module at their heart
-has time and memory complexity quadratic in sequence length. An important question is whether making attention faster and more memory-efficient can help Transformer models address their runtime and memory challenges for long sequences.
 
-Many approximate attention methods have aimed to reduce the compute and memory requirements of attention. Many of them do not display time speedup against standard attention. One main reason is that they focus on FLOP reduction and tend to ignore overheads from memory access (IO).
+Transformers have become larger and more complex, but incorporating longer context into them is still a challenging task because their self-attention module has a time and memory complexity that scales quadratically with sequence length. The problem this paper aimed to addresss is how to enhance the speed and memory efficiency of attention in order to assist Transformer models in overcoming their memory and runtime obstacles for long sequences.
+
+Many other methods have been developed. However, many of these methods do not show a significant improvement in speed over standard attention because they primarily concentrate on reducing the number of floating-point operations (FLOPs) and neglect the overheads from memory access (IO).
+
+
+
+### SRAM vs HBM
+![](/Users/pangli/Desktop/Screen%20Shot%202023-03-20%20at%205.03.22%20PM.png)
+
+
 
 ### Methods
-IO awareness with tiling and recomputing
+Above all, one of our gaol is to restructure the attention and let all the intermediate matrics computed on fast memory: SRAM. 
+IO aware with carefully accounting for the number of access to the slow and fast memory through tiling and recomputing
 
 
 ### Recall Standard Attention
@@ -53,5 +61,14 @@ IO awareness with tiling and recomputing
 ## Others
 
 [Video]()
+
 [Notebook]()
+
+[Paper]()
+
+[Github repo with code]()
+
+[Presentation reference]()
+
+
 
