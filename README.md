@@ -12,7 +12,7 @@ Many other methods have been developed. However, many of these methods do not sh
 
 
 ### SRAM vs HBM
-![plot](Screen Shot 2023-03-20 at 5.03.22 PM.png)
+![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/17782d32252de3ba7d854dbdfa9eb3108829bbb9/image1.png)
 
 
 
