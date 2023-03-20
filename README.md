@@ -12,7 +12,7 @@ Many other methods have been developed. However, many of these methods do not sh
 
 
 ### SRAM vs HBM
-![](/Users/pangli/Desktop/Screen%20Shot%202023-03-20%20at%205.03.22%20PM.png)
+![](Screen Shot 2023-03-20 at 5.03.22 PM.png)
 
 
 
