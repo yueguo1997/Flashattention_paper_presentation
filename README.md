@@ -96,6 +96,11 @@ Get the predefined mask matrix and skip the blocks where mask is 1.
 ## Experiments and results
 
 ### Training time
+* Bert Model
+![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/da7c230dcb62b3581253fbad3642454baf0f24a3/Screen%20Shot%202023-03-21%20at%209.21.36%20PM.png)
+
+* GPT Model
+![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/da7c230dcb62b3581253fbad3642454baf0f24a3/Screen%20Shot%202023-03-21%20at%209.21.36%20PM.png)
 
 ### Model Accuracy
 
