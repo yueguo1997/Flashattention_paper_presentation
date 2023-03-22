@@ -51,8 +51,13 @@ IO aware with carefully accounting for the number of access to the slow and fast
 
 * Recomputation
 
-  1. Store the scaling parameter
+
+   ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/417cbb5e26bd617cb6bfe50c4cbfbc7933d6b8af/Screen%20Shot%202023-03-21%20at%209.35.30%20PM.png)
+
+  1. Store the scaling parameter instead of store the large intermediate matrix into HBM
   2. Recompute the softmax result
+
+     
   
   The goal of this part is to not store intermediate values in HBM for the backward pass, which reduce the number of memory access to HBM
 
@@ -100,18 +105,26 @@ Get the predefined mask matrix and skip the blocks where mask is 1.
 ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/da7c230dcb62b3581253fbad3642454baf0f24a3/Screen%20Shot%202023-03-21%20at%209.21.36%20PM.png)
 
 * GPT Model
-![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/da7c230dcb62b3581253fbad3642454baf0f24a3/Screen%20Shot%202023-03-21%20at%209.21.36%20PM.png)
+![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/417cbb5e26bd617cb6bfe50c4cbfbc7933d6b8af/Screen%20Shot%202023-03-21%20at%209.21.46%20PM.png)
 
 ### Model Accuracy
-
+![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/417cbb5e26bd617cb6bfe50c4cbfbc7933d6b8af/Screen%20Shot%202023-03-21%20at%209.22.07%20PM.png)
 
 
 ### Memory usage
+![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/417cbb5e26bd617cb6bfe50c4cbfbc7933d6b8af/Screen%20Shot%202023-03-21%20at%209.22.56%20PM.png)
 
 
 
 
 ## Limitation
+* Compiling to CUDA. 
+   Our current approach to building IO-aware implementations of attention requires
+   writing a new CUDA kernel for each new attention implementation. This requires writing the attention
+   algorithm in a considerably lower-level language than PyTorch, and requires significant engineering effort.
+   Implementations may also not be transferrable across GPU architectures. These limitations suggest the
+   need for a method that supports writing attention algorithms in a high-level language (e.g., PyTorch), and
+   compiling to IO-aware implementations in CUDA—similar to efforts such as Halide in image processing .
 
 ## ignore point
 In the complexity analysis, even though author carefully calculate the memory access in HBM whe we read the K,Q and V. But the author ignored the memory access when we need to write the scaling l and m into the HBM. Compared with the memory level of the previous step, this part does not account for much, because they are all single-row N vectors, but memory bound still exists. 
