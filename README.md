@@ -16,16 +16,16 @@ Many other methods have been developed. However, many of these methods do not sh
 
 ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/17782d32252de3ba7d854dbdfa9eb3108829bbb9/image1.png)
 
-The on-chip SRAM is an order of magnitude faster than HBM but many orders of magnitude smaller in size.
+
 
 * Time calculation of operations
+    * Computation-bound
 
-Memory-bound: The time taken by the operation is determined by the number of memory accesses, while time spent in computation is much smaller. Examples include most other operations: elementwise (e.g.,activation, dropout), and reduction (e.g., sum, softmax, batch norm, layer norm).
-
+    * Memory-bound: The time taken by the operation is determined by the number of memory accesses, while time spent in computation is much smaller. Examples include most other operations: elementwise (e.g.,activation, dropout), and reduction (e.g., sum, softmax, batch norm, layer norm).
 
 
 ### Convert the problem
-The goal is to maximize the use of fast memory: SRAM。 In the meanwhile, the 
+The goal is to maximize the use of fast memory: SRAM  In the meanwhile, the most common approach to accelerate memory-bound operations is kernel fusion: if there are multiple operations applied to the same input, the input can be loaded once from HBM, instead of multiple times for each operation. Compilers can automatically fuse many elementwise operations. 
 
 
 ### Methods
@@ -36,19 +36,25 @@ IO aware with carefully accounting for the number of access to the slow and fast
 
 ## FlashAttention
 
-
-
 ### Recall Standard Attention
 ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/c49e4ad099f488b020e449a2b4ac9263ee9747f0/image2.png)
 
 
 
-### Method
+### Tech
 
-* Tiling
+* Tiling: 
+
+  1. Split the attention: K, Q, V into blocks. 
+  2. Load the blocks from HBM and transfer into SRAM. 
 
 
 * Recomputation
+
+  1. Store the scaling parameter
+  2. Recompute the softmax result
+  
+  The goal of this part is to not store intermediate values in HBM for the backward pass, which reduce the number of memory access to HBM
 
 
 ### Algorithm
@@ -58,19 +64,33 @@ IO aware with carefully accounting for the number of access to the slow and fast
 
 
 
-
-
-## Complexity Analysis
+## Complexity Analysis on HBM access
 Let 𝑁 be the sequence length, 𝑑 be the head dimension, and 𝑀 be size of SRAM with 𝑑 ≤ 𝑀 ≤ 𝑁 𝑑. Standard attention (Algorithm 0) requires Θ(𝑁 𝑑 + 𝑁2) HBM accesses, while FlashAttention (Algorithm 1) requires Θ(𝑁2𝑑2𝑀−1) HBM accesses.
+
 
 * Standard Attetion
 
-* FlashatAttention
+  * Load Q and K blocks: Θ(𝑁 𝑑) 
+  * Write S = QK into HDM:  Θ(𝑁 2)
+  * P = softmax(S), the input S is read from HBM and the output P is written to HBM: Θ(𝑁 2)
+  * O = PV, readP, V from HBM and write O into HBM: Θ(𝑁 𝑑 + N2)
+  In total: Θ(𝑁 𝑑 + N2)
 
+* FlashatAttention
+  
+  Assume M is the size of SRAM. M should be larger than d smaller tha Nd
+
+  * Load V and K blocks: Θ(𝑁 𝑑) in total
+  * Every block, load corresponding Q block and O
+    Notice: we can only load the total A blocks for one time, but every V/K block, we need to load the O allvover again. The access should be Θ (𝑁 𝑑 + 𝑁       𝑑𝑇𝑐) = Θ(𝑁 𝑑𝑇𝑐).
+  * 𝐵𝑐 𝑑 = 𝑂(𝑀) ⇔ 𝐵𝑐 = 𝑂(M/d)
+  * 𝑇𝑐 =𝑁/𝐵𝑐
+  * Θ(𝑁 𝑑𝑇𝑐) = Θ(𝑁2𝑑2/𝑀）
 
 
 ## Extension: Block-Sparse FlashatAttention
-Get the predefined mask matrixx and skip the blocks where mask is 1.
+
+Get the predefined mask matrix and skip the blocks where mask is 1.
 
 
 ## Experiments and results
@@ -89,6 +109,8 @@ Get the predefined mask matrixx and skip the blocks where mask is 1.
 ## Limitation
 
 ## ignore point
+In the complexity analysis, even though author carefully calculate the memory access in HBM whe we read the K,Q and V. But the author ignored the memory access when we need to write the scaling l and m into the HBM. Compared with the memory level of the previous step, this part does not account for much, because they are all single-row N vectors, but memory bound still exists. 
+
 
 ## Links
 
@@ -106,8 +128,8 @@ Application
 
 * [AITemplate]() 
 * [Nvidia's FasterTransformer]()
-* Pytorch
-* Huggingface
+* [Pytorch]()
+* [Huggingface]()
 
 
 
