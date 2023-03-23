@@ -146,7 +146,6 @@ Application
 
 * [AITemplate]() 
 * [Nvidia's FasterTransformer]()
-* [Pytorch]()
 * [Huggingface]()
 
 
