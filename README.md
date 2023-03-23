@@ -22,7 +22,11 @@ Many other methods have been developed. However, many of these methods do not sh
 * Time calculation of operations
     * Computation-bound
 
-    * Memory-bound: The time taken by the operation is determined by the number of memory accesses, while time spent in computation is much smaller. Examples include most other operations: elementwise (e.g.,activation, dropout), and reduction (e.g., sum, softmax, batch norm, layer norm).
+    * Memory-bound: 
+      The time taken by the operation is determined by the number of memory accesses, while time spent in computation is much smaller. 
+   
+    Question:
+    Is attention Computation-bound or Memory-bound? 
 
 
 ### Convert the problem
