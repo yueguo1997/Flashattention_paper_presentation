@@ -20,7 +20,7 @@ Many other methods have been developed. However, many of these methods do not sh
 
 
 * Time calculation of operations
-    * Computation-bound:the time taken by the operation is determined by how many arithmetic operations![image](https://user-images.githubusercontent.com/89158310/227127445-a7aa2a4a-d68d-4125-b7f9-f8bbe1b64949.png)
+    * Computation-bound:the time taken by the operation is determined by how many arithmetic operations
 
     * Memory-bound: 
       The time taken by the operation is determined by the number of memory accesses, while time spent in computation is much smaller. 
@@ -35,8 +35,6 @@ The goal is to maximize the use of fast memory: SRAM. In the meanwhile, the most
 
 ### Methods
 IO aware with carefully accounting for the number of access to the slow and fast memory through tiling and recomputing
-
-
 
 
 ## FlashAttention
