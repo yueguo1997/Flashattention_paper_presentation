@@ -120,8 +120,6 @@ Get the predefined mask matrix and skip the blocks where mask is 1.
 ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/417cbb5e26bd617cb6bfe50c4cbfbc7933d6b8af/Screen%20Shot%202023-03-21%20at%209.22.56%20PM.png)
 
 
-   Question 2: When sequence length increase, the memorage usage of the flashattention still uch smaller than standard one. But the improvemnent of the flashattention in runtime start to decrease. Why?
-
 ## Limitation
 * Single GPU
 * Low level language
