@@ -15,7 +15,8 @@ Many other methods have been developed. However, many of these methods do not sh
 * SRAM vs HBM
 
 ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/17782d32252de3ba7d854dbdfa9eb3108829bbb9/image1.png)
-For example, the A100 GPU has 40-80GB of high bandwidth memory (HBM) with bandwidth 1.5-2.0TB/s and 192KB of on-chip SRAM per each of 108 streaming multiprocessors with bandwidth estimated around 19TB/s.
+
+   For example, the A100 GPU has 40-80GB of high bandwidth memory (HBM) with bandwidth 1.5-2.0TB/s and 192KB of on-chip SRAM per each of 108 streaming         multiprocessors with bandwidth estimated around 19TB/s.
 
 
 * Time calculation of operations
