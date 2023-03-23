@@ -1,4 +1,4 @@
-# Flashattention_paper_presentation
+# FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness
 
 
 ## Background
@@ -20,7 +20,7 @@ Many other methods have been developed. However, many of these methods do not sh
 
 
 * Time calculation of operations
-    * Computation-bound
+    * Computation-bound:the time taken by the operation is determined by how many arithmetic operations![image](https://user-images.githubusercontent.com/89158310/227127445-a7aa2a4a-d68d-4125-b7f9-f8bbe1b64949.png)
 
     * Memory-bound: 
       The time taken by the operation is determined by the number of memory accesses, while time spent in computation is much smaller. 
@@ -30,7 +30,7 @@ Many other methods have been developed. However, many of these methods do not sh
 
 
 ### Convert the problem
-The goal is to maximize the use of fast memory: SRAM  In the meanwhile, the most common approach to accelerate memory-bound operations is kernel fusion: if there are multiple operations applied to the same input, the input can be loaded once from HBM, instead of multiple times for each operation. Compilers can automatically fuse many elementwise operations. 
+The goal is to maximize the use of fast memory: SRAM. In the meanwhile, the most common approach to accelerate memory-bound operations is kernel fusion: if there are multiple operations applied to the same input, the input can be loaded once from HBM, instead of multiple times for each operation. Compilers can automatically fuse many elementwise operations. 
 
 
 ### Methods
@@ -78,24 +78,24 @@ IO aware with carefully accounting for the number of access to the slow and fast
 Let 𝑁 be the sequence length, 𝑑 be the head dimension, and 𝑀 be size of SRAM with 𝑑 ≤ 𝑀 ≤ 𝑁 𝑑. Standard attention (Algorithm 0) requires Θ(𝑁 𝑑 + 𝑁2) HBM accesses, while FlashAttention (Algorithm 1) requires Θ(𝑁2𝑑2𝑀−1) HBM accesses.
 
 
-* Standard Attetion
+* Standard Attention
 
-  * Load Q and K blocks: Θ(𝑁 𝑑) 
-  * Write S = QK into HDM:  Θ(𝑁 2)
-  * P = softmax(S), the input S is read from HBM and the output P is written to HBM: Θ(𝑁 2)
-  * O = PV, readP, V from HBM and write O into HBM: Θ(𝑁 𝑑 + N2)
-  In total: Θ(𝑁 𝑑 + N2)
+  * Load Q and K blocks: $$\Theta(Nd)$$
+  * Write S = QK into HDM:  $$\Theta(N^2)$$
+  * P = softmax(S), the input S is read from HBM and the output P is written to HBM: $$\Theta(N^2)$$
+  * O = PV, readP, V from HBM and write O into HBM: $$\Theta(Nd + N^2)$$
+  In total: $$\Theta(Nd + N^2)$$
 
 * FlashatAttention
   
-  Assume M is the size of SRAM. M should be larger than d smaller tha Nd
+  Assume M is the size of SRAM. M should be larger than d smaller than Nd
 
-  * Load V and K blocks: Θ(𝑁 𝑑) in total
+  * Load V and K blocks: $$\Theta(Nd)$$ in total
   * Every block, load corresponding Q block and O
-    Notice: we can only load the total A blocks for one time, but every V/K block, we need to load the O allvover again. The access should be Θ (𝑁 𝑑 + 𝑁       𝑑𝑇𝑐) = Θ(𝑁 𝑑𝑇𝑐).
-  * 𝐵𝑐 𝑑 = 𝑂(𝑀) ⇔ 𝐵𝑐 = 𝑂(M/d)
-  * 𝑇𝑐 =𝑁/𝐵𝑐
-  * Θ(𝑁 𝑑𝑇𝑐) = Θ(𝑁2𝑑2/𝑀）
+    Notice: we can only load the total A blocks for one time, but every V/K block, we need to load the O allvover again. The access should be $$\Theta(𝑁 𝑑 + 𝑁𝑑T_c) = \Theta(NdT_c)$$.
+  * $$d𝐵_c = 𝑂(𝑀) ⇔ 𝐵𝑐 = 𝑂(M/d)$$
+  * $$T_c =𝑁/B_c$$
+  * $$\Theta(𝑁𝑑T_c) = Θ(𝑁^2𝑑^2/𝑀)$$
 
 
 ## Extension: Block-Sparse FlashatAttention
@@ -120,16 +120,11 @@ Get the predefined mask matrix and skip the blocks where mask is 1.
 ![plot](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/417cbb5e26bd617cb6bfe50c4cbfbc7933d6b8af/Screen%20Shot%202023-03-21%20at%209.22.56%20PM.png)
 
 
-
+   Question 2: When sequence length increase, the memorage usage of the flashattention still uch smaller than standard one. But the improvemnent of the flashattention in runtime start to decrease. Why?
 
 ## Limitation
-* Compiling to CUDA. 
-   Our current approach to building IO-aware implementations of attention requires
-   writing a new CUDA kernel for each new attention implementation. This requires writing the attention
-   algorithm in a considerably lower-level language than PyTorch, and requires significant engineering effort.
-   Implementations may also not be transferrable across GPU architectures. These limitations suggest the
-   need for a method that supports writing attention algorithms in a high-level language (e.g., PyTorch), and
-   compiling to IO-aware implementations in CUDA—similar to efforts such as Halide in image processing .
+* Single GPU
+* Low level language
 
 ## ignore point
 In the complexity analysis, even though author carefully calculate the memory access in HBM whe we read the K,Q and V. But the author ignored the memory access when we need to write the scaling l and m into the HBM. Compared with the memory level of the previous step, this part does not account for much, because they are all single-row N vectors, but memory bound still exists. 
