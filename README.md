@@ -134,11 +134,10 @@ In the complexity analysis, even though author carefully calculate the memory ac
 
 [Notebook]()
 
-[Paper]()
+[Paper](https://arxiv.org/pdf/2205.14135.pdf)
 
 [Github repo with code](https://github.com/HazyResearch/flash-attention)
 
-[Presentation reference]()
 
 Application
 
