@@ -130,7 +130,7 @@ In the complexity analysis, even though author carefully calculate the memory ac
 
 ## Links
 
-[Video]()
+[Video](https://drive.google.com/file/d/1ifDY1vJ79rDCfUspbb3kblEcLv5faysq/view?usp=sharing)
 
 [Notebook]()
 
