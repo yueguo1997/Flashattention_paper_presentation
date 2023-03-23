@@ -132,7 +132,7 @@ In the complexity analysis, even though author carefully calculate the memory ac
 
 [Video](https://drive.google.com/file/d/1ifDY1vJ79rDCfUspbb3kblEcLv5faysq/view?usp=sharing)
 
-[Notebook]()
+[Notebook](https://github.com/yueguo1997/Flashattention_paper_presentation/blob/1fec30343ba23af8ba731d763efafac25f6693b3/Flashattention.ipynb)
 
 [Paper](https://arxiv.org/pdf/2205.14135.pdf)
 
@@ -141,9 +141,9 @@ In the complexity analysis, even though author carefully calculate the memory ac
 
 Application
 
-* [AITemplate]() 
-* [Nvidia's FasterTransformer]()
-* [Huggingface]()
+* [AITemplate](https://ai.facebook.com/blog/gpu-inference-engine-nvidia-amd-open-source/) 
+* [Nvidia's FasterTransformer](https://github.com/NVIDIA/FasterTransformer)
+* [Huggingface](https://github.com/huggingface/transformers)
 
 
 
